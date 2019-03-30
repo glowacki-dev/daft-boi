@@ -54,3 +54,6 @@ dkms.conf
 # Compilation artifacts
 Release
 bin
+
+# Other junk
+.vscode

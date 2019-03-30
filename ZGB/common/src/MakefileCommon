@@ -104,7 +104,7 @@ $(OBJDIR)/zgb/%.o: $(ZGB_PATH_UNIX)/src/%.c
 $(OBJDIR_RES)/%.o: ../res/src/%.c
 	@echo compiling resource: $<
 	@if grep -q "unsigned char" $<; then \
-		sed -i "s/unsigned char/const unsigned  char/g" $<; \
+		sed -i "" "s/unsigned char/const unsigned  char/g" $<; \
 	fi
 	@$(SDCC) $(CFLAGS) $(filter --constseg CODE_%, $(subst .b,--constseg CODE_,$(suffix $(<:%.c=%)))) -c -o $@ $<
 

@@ -1,3 +1,4 @@
-run:
+PROJECT_NAME = Common
+include MakefileCommon
 
-clean:
+all: build_lib
