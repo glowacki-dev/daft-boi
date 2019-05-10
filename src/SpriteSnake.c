@@ -15,9 +15,9 @@ void Start_SPRITE_SNAKE() {
 
 void Update_SPRITE_SNAKE() {
 	struct SnakeInfo* data = (struct SnakeInfo*)THIS->custom_data;
-	if(TranslateSprite(THIS, 0, data->vy << delta_time)) {
-		data->vy = -data->vy;
-	}
+	// if(TranslateSprite(THIS, 0, data->vy << delta_time)) {
+		// data->vy = -data->vy;
+	// }
 }
 
 void Destroy_SPRITE_SNAKE() {
