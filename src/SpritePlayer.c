@@ -5,6 +5,7 @@ UINT8 bank_SPRITE_PLAYER = 2;
 #include "ZGBMain.h"
 #include "Keys.h"
 #include "SpriteManager.h"
+#include "GameStates.h"
 
 const UINT8 anim_idle[] = {1, 0};
 const UINT8 anim_walk[] = {2, 1, 2};
@@ -17,6 +18,8 @@ struct PlayerInfo {
 	INT8 direction;
 	const UINT8 *direction_anim;
 };
+
+extern GameState game_state;
 
 void Start_SPRITE_PLAYER() {
 	struct PlayerInfo* data = (struct PlayerInfo*)THIS->custom_data;
@@ -79,7 +82,7 @@ void Update_SPRITE_PLAYER() {
 	SPRITEMANAGER_ITERATE(i, spr) {
 		if(spr->type == SPRITE_SNAKE) {
 			if(CheckCollision(THIS, spr)) {
-				SetState(STATE_GAME);
+				game_state = LEVEL_COMPLETE;
 			}
 		}
 	}
