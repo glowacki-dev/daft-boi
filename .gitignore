@@ -53,6 +53,7 @@ dkms.conf
 
 # Compilation artifacts
 Release
+Debug
 bin
 
 # Other junk
