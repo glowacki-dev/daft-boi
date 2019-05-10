@@ -38,7 +38,7 @@ void Update_SPRITE_PLAYER() {
 		data->direction = J_UP;
 		data->direction_anim = anim_walk_up;
 		TranslateSprite(THIS, 0, -1 << delta_time);
-	} 
+	}
 	if(KEY_PRESSED(J_DOWN)) {
 		data->direction = J_DOWN;
 		data->direction_anim = anim_walk;
@@ -82,7 +82,11 @@ void Update_SPRITE_PLAYER() {
 	SPRITEMANAGER_ITERATE(i, spr) {
 		if(spr->type == SPRITE_DOORS) {
 			if(CheckCollision(THIS, spr) && game_state.door_state == 1) {
-				game_state.state = LEVEL_COMPLETE;
+				if(spr->custom_data[0] == 0) { // non-respawn
+					game_state.state = LEVEL_COMPLETE;
+				} else {
+					game_state.state = GOING_TO_RESPAWN;
+				}
 			}
 		}
 	}
