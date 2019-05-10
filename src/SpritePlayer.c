@@ -81,8 +81,8 @@ void Update_SPRITE_PLAYER() {
 
 	SPRITEMANAGER_ITERATE(i, spr) {
 		if(spr->type == SPRITE_DOORS) {
-			if(CheckCollision(THIS, spr)) {
-				game_state = LEVEL_COMPLETE;
+			if(CheckCollision(THIS, spr) && game_state.door_state == 1) {
+				game_state.state = LEVEL_COMPLETE;
 			}
 		}
 	}

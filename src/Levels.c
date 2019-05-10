@@ -5,9 +5,9 @@
 #include "../res/src/map2.h"
 
 #define LEVEL(A, BANK) A##Width, A##Height, A, BANK
-const struct LevelInfo levels[] = {
-	{LEVEL(map, 3)},
-	{LEVEL(map2, 3)}
+const LevelInfo levels[] = {
+	{LEVEL(map, 2)},
+	{LEVEL(map2, 2)}
 };
 
 UINT8 current_level = 0;

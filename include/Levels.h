@@ -8,6 +8,6 @@ typedef struct LevelInfo {
 	UINT16 h;
 	UINT8* map;
 	UINT8 bank;
-};
+} LevelInfo;
 
 #endif

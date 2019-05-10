@@ -3,9 +3,14 @@
 
 #include "main.h"
 
-typedef enum GameState {
+typedef enum GameStateEnum {
 	PLAYING,
 	LEVEL_COMPLETE
+} GameStateEnum;
+
+typedef struct GameState {
+	GameStateEnum state;
+	UINT8 door_state;
 } GameState;
 
 #endif

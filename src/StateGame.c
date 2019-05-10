@@ -15,7 +15,7 @@ extern UINT8 current_level;
 extern const UINT8 num_levels;
 extern const struct LevelInfo levels[];
 
-UINT8 collision_tiles[] = {1, 0};
+UINT8 collision_tiles[] = {1, 2, 253, 0};
 
 GameState game_state;
 
@@ -31,30 +31,25 @@ void Start_STATE_GAME() {
 
 	scroll_target = SpriteManagerAdd(SPRITE_PLAYER, 50, 50);
 
-	InitScrollTiles(0, 2, tiles, 3);
+	InitScrollTiles(0, 3, tiles, 2);
 	InitScroll(level->w, level->h, level->map, collision_tiles, 0, level->bank);
 	SHOW_BKG;
 
-	game_state = PLAYING;
+	game_state.state = PLAYING;
+	game_state.door_state = 0;
 }
 
 void Update_STATE_GAME() {
 	UINT8 i;
 	struct Sprite* spr;
 
-	switch (game_state)
+	switch (game_state.state)
 	{
 	case PLAYING:
-		SPRITEMANAGER_ITERATE(i, spr) {
-			if(spr->type == SPRITE_SNAKE) {
-				if(CheckCollision(SPRITE_PLAYER, spr)) {
-					game_state = LEVEL_COMPLETE;
-				}
-			}
-		}
 		break;
 	case LEVEL_COMPLETE:
 		current_level++;
+		game_state.door_state = 0;
 		SetState(current_level == num_levels ? STATE_MENU : STATE_GAME);
 		break;
 	default:

@@ -1,6 +1,6 @@
-#pragma bank 2
+#pragma bank 3
 #include "main.h"
-UINT8 bank_STATE_MENU = 2;
+UINT8 bank_STATE_MENU = 3;
 
 #include "ZGBMain.h"
 #include "Scroll.h"
