@@ -29,6 +29,8 @@ void Start_STATE_GAME() {
 
 	initrand(sys_time);
 
+	INIT_CONSOLE(font, 2, 2);
+
 	SPRITES_8x16;
 	for(i = 0; i != N_SPRITE_TYPES; ++ i) {
 		SpriteManagerLoad(i);
@@ -52,14 +54,15 @@ void Update_STATE_GAME() {
 	switch (game_state.state)
 	{
 	case PLAYING:
+		DPRINT_POS(0, 1);
+		DPrintf("Pts: %d             ", current_level);
 		break;
 	case GOING_TO_RESPAWN:
 		current_level = 0;
 		next_level = 0;
 
-		INIT_CONSOLE(font, 2, 2);
 		DPRINT_POS(0, 0);
-		DPrintf("Respawn");
+		DPrintf("Respawn                  ");
 
 		SetState(STATE_GAME);
 		break;
@@ -76,10 +79,10 @@ void Update_STATE_GAME() {
 				will_be_next = 1 + (next % num_playable_levels);
 			}
 		} while (will_be_next == next_level);
-		
-		INIT_CONSOLE(font, 2, 2);
+	
+	
 		DPRINT_POS(0, 0);
-		DPrintf("rnd: %d, lvl: %d", next, will_be_next);
+		DPrintf("rnd: %d, lvl: %d            ", next, will_be_next);
 		
 		next_level = will_be_next;
 		game_state.door_state = 0;

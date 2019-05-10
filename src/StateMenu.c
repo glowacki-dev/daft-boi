@@ -10,6 +10,7 @@ UINT8 bank_STATE_MENU = 3;
 #include "../res/src/start_screen_tile_data.h"
 #include "../res/src/start_screen_map_data.h"
 
+extern UINT8* intro_mod_Data[];
 UINT8 collision_tiles[] = {1, 0};
 extern UINT8 current_level;
 
@@ -21,7 +22,7 @@ void Start_STATE_MENU() {
 	HIDE_WIN;
 
 	current_level = 0;
-	// PlayMusic(polka_start_mod_Data, 4, 0);
+	PlayMusic(intro_mod_Data, 3, 0);
 }
 
 // extern const UINT8 max_energy;

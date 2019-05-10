@@ -55,6 +55,7 @@ dkms.conf
 Release
 Debug
 bin
+!res/music/*.mod
 
 # Other junk
 .vscode
