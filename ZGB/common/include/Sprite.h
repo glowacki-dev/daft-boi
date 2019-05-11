@@ -40,6 +40,10 @@ struct Sprite {
 #define SPRITE_UNSET_VMIRROR(SPRITE) (SPRITE->flags &= ~32)
 #define SPRITE_GET_VMIRROR(SPRITE)   (SPRITE->flags & 32)
 
+#define SPRITE_SET_HMIRROR(SPRITE)   (SPRITE->flags |= 64)
+#define SPRITE_UNSET_HMIRROR(SPRITE) (SPRITE->flags &= ~64)
+#define SPRITE_GET_HMIRROR(SPRITE)   (SPRITE->flags & 64)
+
 //Palette flag
 #define SPRITE_SET_CGB_PALETTE(SPRITE, PALETTE) SPRITE->flags = ((SPRITE->flags & 0xF8) | PALETTE | 0x10)
 #define SPRITE_SET_DMG_PALETTE(SPRITE, PALETTE) SPRITE->flags = ((SPRITE->flags & 0xEF) | (PALETTE << 4))

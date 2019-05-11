@@ -34,6 +34,25 @@ void Update_SPRITE_PLAYER() {
 	struct PlayerInfo* data = (struct PlayerInfo*)THIS->custom_data;
 	SPRITE_UNSET_VMIRROR(THIS);
 
+	switch (data->direction)
+	{
+	case J_UP:
+		data->direction_anim = anim_idle_up;
+		break;
+	case J_DOWN:
+		data->direction_anim = anim_idle;
+		break;
+	case J_LEFT:
+		data->direction_anim = anim_idle_right;
+		SPRITE_SET_VMIRROR(THIS);
+		break;
+	case J_RIGHT:
+		data->direction_anim = anim_idle_right;
+		break;
+	default:
+		break;
+	}
+
 	if(KEY_PRESSED(J_UP)) {
 		data->direction = J_UP;
 		data->direction_anim = anim_walk_up;
@@ -54,27 +73,6 @@ void Update_SPRITE_PLAYER() {
 		data->direction = J_RIGHT;
 		data->direction_anim = anim_walk_right;
 		TranslateSprite(THIS, 1 << delta_time, 0);
-	}
-
-	if(keys == 0) {
-		switch (data->direction)
-		{
-		case J_UP:
-			data->direction_anim = anim_idle_up;
-			break;
-		case J_DOWN:
-			data->direction_anim = anim_idle;
-			break;
-		case J_LEFT:
-			data->direction_anim = anim_idle_right;
-			SPRITE_SET_VMIRROR(THIS);
-			break;
-		case J_RIGHT:
-			data->direction_anim = anim_idle_right;
-			break;
-		default:
-			break;
-		}
 	}
 
 	SetSpriteAnim(THIS, data->direction_anim, 10);
