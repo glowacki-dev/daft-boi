@@ -26,6 +26,7 @@ void Start_SPRITE_PLAYER() {
 	data->direction_anim = anim_idle;
 	THIS->coll_x = 2;
 	THIS->coll_w = 12;
+	game_state.player = THIS;
 }
 
 void Update_SPRITE_PLAYER() {
