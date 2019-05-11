@@ -7,7 +7,8 @@
 typedef enum GameStateEnum {
 	PLAYING,
 	LEVEL_COMPLETE,
-	GOING_TO_RESPAWN
+	GOING_TO_RESPAWN,
+	GAME_OVER
 } GameStateEnum;
 
 typedef struct GameState {

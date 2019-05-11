@@ -12,7 +12,6 @@ struct SnakeInfo {
 	UINT8 delay;
 };
 
-
 void Start_SPRITE_SNAKE() {
 	struct SnakeInfo* data = (struct SnakeInfo*)THIS->custom_data;
 	THIS->coll_x = 4;

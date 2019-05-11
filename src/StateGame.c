@@ -87,6 +87,9 @@ void Update_STATE_GAME() {
 		game_state.door_state = 0;
 		SetState(STATE_GAME);
 		break;
+	case GAME_OVER:
+		SetState(STATE_GAME_OVER);
+		break;
 	default:
 		break;
 	}

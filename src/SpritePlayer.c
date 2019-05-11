@@ -87,6 +87,10 @@ void Update_SPRITE_PLAYER() {
 					game_state.state = GOING_TO_RESPAWN;
 				}
 			}
+		} else if(spr->type == SPRITE_SNAKE) {
+			if(CheckCollision(THIS, spr)) {
+				game_state.state = GAME_OVER;
+			}
 		}
 	}
 }
