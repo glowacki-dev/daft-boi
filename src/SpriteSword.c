@@ -14,7 +14,24 @@ const UINT8 anim_hidden[] = {1, 4};
 
 extern GameState game_state;
 
+void SetHorizontalCollision()
+{
+    THIS->coll_x = 0;
+    THIS->coll_w = 16;
+    THIS->coll_y = 5;
+    THIS->coll_h = 4;
+}
+
+void SetVerticalCollision()
+{
+    THIS->coll_x = 5;
+    THIS->coll_w = 4;
+    THIS->coll_y = 0;
+    THIS->coll_h = 16;
+}
+
 void Start_SPRITE_SWORD() {
+    SetVerticalCollision();
 }
 
 void Update_SPRITE_SWORD() {
@@ -29,6 +46,7 @@ void Update_SPRITE_SWORD() {
             TranslateSprite(THIS, 0, -1 << delta_time);
             THIS->x = game_state.player->x;
             THIS->y = game_state.player->y - 16;
+            SetVerticalCollision();
             SetSpriteAnim(THIS, anim_up, 10);
         }
         else if(player_info->direction == J_DOWN)
@@ -36,6 +54,7 @@ void Update_SPRITE_SWORD() {
             TranslateSprite(THIS, 0, 1 << delta_time);
             THIS->x = game_state.player->x;
             THIS->y = game_state.player->y + 16;
+            SetVerticalCollision();
             SetSpriteAnim(THIS, anim_down, 10);
         }
         else if(player_info->direction == J_LEFT)
@@ -43,6 +62,7 @@ void Update_SPRITE_SWORD() {
             TranslateSprite(THIS, -1 << delta_time, 0);
             THIS->x = game_state.player->x - 12;
             THIS->y = game_state.player->y;
+            SetHorizontalCollision();
             SetSpriteAnim(THIS, anim_left, 10);
         }
         else if(player_info->direction == J_RIGHT)
@@ -50,6 +70,7 @@ void Update_SPRITE_SWORD() {
             TranslateSprite(THIS, 1 << delta_time, 0);
             THIS->x = game_state.player->x + 12;
             THIS->y = game_state.player->y;
+            SetHorizontalCollision();
             SetSpriteAnim(THIS, anim_right, 10);
         }
     }
