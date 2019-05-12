@@ -14,6 +14,7 @@ UINT8 bank_STATE_GAME = 2;
 #include "GameStates.h"
 #include "rand.h"
 #include "Print.h"
+#include "Sound.h"
 
 extern UINT8 current_level;
 extern const UINT8 num_playable_levels;
@@ -55,6 +56,11 @@ void Start_STATE_GAME() {
 	NR51_REG = 0xFF; //Enables all channels (left and right)
 	NR50_REG = 0x77; //Max volume
 	PlayMusic(battle_theme_mod_Data, 3, 1);
+
+	if(current_level == 0) {
+		// Respawn level intro shitty fx 
+        PlayFx(CHANNEL_1, 30, 0x7f, 0x58, 0xf7, 0x06, 0x87);
+	}
 }
 
 void Update_STATE_GAME() {
@@ -69,6 +75,8 @@ void Update_STATE_GAME() {
 		break;
 	case GOING_TO_RESPAWN:
 		current_level = 0;
+
+		game_state.player_hp = MAX_HP;
 
 		DPRINT_POS(0, 0);
 		DPrintf("Respawn                  ");

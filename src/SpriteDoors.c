@@ -23,6 +23,7 @@ void Start_SPRITE_DOORS() {
 	const struct LevelInfo* level = &levels[current_level];
 
 	data->respawn = rand() % 2;
+    data->sprite_offset = 0;
 
     // Load horizontal and vertical doors + do flipping
     if(THIS->x == 0) {
@@ -34,6 +35,7 @@ void Start_SPRITE_DOORS() {
     } else if (THIS->y == 8 * level->h - 16 || THIS->y == 8 * level->h - 32) {
         SPRITE_SET_HMIRROR(THIS);
         SPRITE_SET_VMIRROR(THIS);
+        data->sprite_offset = 0;
     }
 
     THIS->current_frame = data->sprite_offset;

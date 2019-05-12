@@ -17,7 +17,6 @@ const UINT8 anim_walk_up[] = {2, 7, 8};
 
 const UINT8 EMPTY_HEART_TILE = 80;
 const UINT8 FULL_HEART_TILE = 81;
-const UINT8 max_hp = 5;
 const UINT8 player_bounce = 16;
 
 const UINT8 sword_frames = 15;
@@ -28,15 +27,15 @@ UINT8 any_snakes;
 
 extern GameState game_state;
 
-void RefreshHp(struct PlayerInfo* player_info)
+void RefreshHp()
 {
     UINT8 i;
 
-    for(i = 0; i != player_info->hp; i++)
+    for(i = 0; i != game_state.player_hp; i++)
     {
         set_win_tiles(0 + i, 1, 1, 1, &FULL_HEART_TILE);
     }
-    for(; i != max_hp; i++)
+    for(; i != MAX_HP; i++)
     {
         set_win_tiles(0 + i, 1, 1, 1, &EMPTY_HEART_TILE);
     }
@@ -103,16 +102,16 @@ void BouncePlayer(struct Sprite* enemy) {
 void Start_SPRITE_PLAYER() {
 	struct PlayerInfo* data = (struct PlayerInfo*)THIS->custom_data;
 	data->direction_anim = anim_idle;
-  if(data->hp == NULL)
+  if(game_state.player_hp == NULL)
   {
-      data->hp = max_hp;
+      game_state.player_hp = MAX_HP;
   }
 	THIS->coll_x = 2;
 	THIS->coll_w = 12;
   any_snakes = 1;
 	game_state.player = THIS;
   SpriteManagerAdd(SPRITE_SWORD, THIS->x, THIS->y + 16);
-  RefreshHp(data);
+  RefreshHp();
 }
 
 void Update_SPRITE_PLAYER() {
@@ -197,11 +196,11 @@ void Update_SPRITE_PLAYER() {
       any_snakes = 1;
 
 			if(CheckCollision(THIS, spr)) {
-        data->hp--;
-        PlayFx(CHANNEL_1, 50, 0x5b, 0x82, 0xa4, 0x87, 0x84);
-        if(data->hp > 0)
+                game_state.player_hp--;
+        PlayFx(CHANNEL_1, 30, 0x5b, 0x82, 0xf4, 0x87, 0x84);
+        if(game_state.player_hp > 0)
         {
-            RefreshHp(data);
+            RefreshHp();
             BouncePlayer(spr);
         }
         else

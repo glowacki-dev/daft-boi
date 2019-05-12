@@ -5,6 +5,7 @@ UINT8 bank_SPRITE_SWORD = 2;
 #include "ZGBMain.h"
 #include "SpriteManager.h"
 #include "GameStates.h"
+#include "Sound.h"
 
 const UINT8 anim_up[] = {1, 1};
 const UINT8 anim_down[] = {1, 0};
@@ -41,6 +42,8 @@ void Update_SPRITE_SWORD() {
 
     if(player_info->attack == 1)
     {
+        PlayFx(CHANNEL_4, 16, 0x14, 0xf1, 0x39, 0xc0);
+
         if(player_info->direction == J_UP)
         {
             TranslateSprite(THIS, 0, -1 << delta_time);
