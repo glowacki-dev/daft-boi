@@ -50,7 +50,7 @@ void BouncePlayer(struct Sprite* enemy) {
     else if(THIS->x > 160 - 16 - 16 - 1)
     {
         // move player to the left regardless collision coming from left
-        TranslateSprite(THIS, (-player_bounce + enemy->coll_w), 0);
+        TranslateSprite(THIS, (-player_bounce - enemy->coll_w), 0);
     }
     else
     {
@@ -69,16 +69,16 @@ void BouncePlayer(struct Sprite* enemy) {
     }
 
     // if player is too close to the bottom wall
-    if(THIS->y < 16 + 16 + 1)
+    if(THIS->y > 144 - 16 - 16 -1)
     {
         // move player to the top regardless collision coming from top
-        TranslateSprite(THIS, 0, (player_bounce + enemy->coll_w));
+        TranslateSprite(THIS, 0, (-player_bounce - enemy->coll_w));
     }
     // if player is too close to the top wall
-    else if(THIS->y > 144 - 16 - 16 - 1)
+    else if(THIS->y < 16 + 16 + 1)
     {
         // move player to the bottom regardless collision coming from bottom
-        TranslateSprite(THIS, 0, (-player_bounce + enemy->coll_w));
+        TranslateSprite(THIS, 0, (player_bounce + enemy->coll_w));
     }
     else
     {
