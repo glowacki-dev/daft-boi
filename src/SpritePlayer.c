@@ -19,11 +19,9 @@ const UINT8 FULL_HEART_TILE = 81;
 const UINT8 max_hp = 5;
 const UINT8 player_bounce = 16;
 
-struct PlayerInfo {
-  UINT8 hp;
-	INT8 direction;
-	const UINT8 *direction_anim;
-};
+const UINT8 sword_frames = 15;
+UINT8 cooldown = 0;
+UINT8 current_sword_frames = 0;
 
 extern GameState game_state;
 
@@ -102,10 +100,14 @@ void BouncePlayer(struct Sprite* enemy) {
 void Start_SPRITE_PLAYER() {
 	struct PlayerInfo* data = (struct PlayerInfo*)THIS->custom_data;
 	data->direction_anim = anim_idle;
-  data->hp = max_hp;
+  if(data->hp == NULL)
+  {
+      data->hp = max_hp;
+  }
 	THIS->coll_x = 2;
 	THIS->coll_w = 12;
 	game_state.player = THIS;
+  SpriteManagerAdd(SPRITE_SWORD, THIS->x, THIS->y + 16);
   RefreshHp(data);
 }
 
@@ -155,6 +157,25 @@ void Update_SPRITE_PLAYER() {
 		data->direction_anim = anim_walk_right;
 		TranslateSprite(THIS, 1 << delta_time, 0);
 	}
+  if(KEY_PRESSED(J_B) && data->attack == 0 && cooldown == 0) {
+    data->attack = 1;
+    current_sword_frames = 10;
+    cooldown = 40;
+  }
+
+  if(data->attack == 1 && current_sword_frames <= 0)
+  {
+      data->attack = 0;
+      current_sword_frames = 0;
+  }
+  else if(data->attack == 0 && current_sword_frames == 0 && cooldown > 0)
+  {
+      cooldown--;
+  }
+  else
+  {
+      current_sword_frames--;
+  }
 
 	SetSpriteAnim(THIS, data->direction_anim, 10);
 

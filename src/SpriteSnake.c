@@ -25,7 +25,7 @@ void Update_SPRITE_SNAKE() {
 	struct SnakeInfo* data = (struct SnakeInfo*)THIS->custom_data;
 	UINT8 move_x = 0, move_y = 0;
 
-	data->delay = (data->delay + 1) % 2;
+	data->delay = (data->delay + 1) % 4;
 
 	if(data->delay == 0) {
 		if(THIS->x < game_state.player->x) {
