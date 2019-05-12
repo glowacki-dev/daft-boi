@@ -23,6 +23,8 @@ const UINT8 sword_frames = 15;
 UINT8 cooldown = 0;
 UINT8 current_sword_frames = 0;
 
+UINT8 any_snakes;
+
 extern GameState game_state;
 
 void RefreshHp(struct PlayerInfo* player_info)
@@ -106,6 +108,7 @@ void Start_SPRITE_PLAYER() {
   }
 	THIS->coll_x = 2;
 	THIS->coll_w = 12;
+  any_snakes = 1;
 	game_state.player = THIS;
   SpriteManagerAdd(SPRITE_SWORD, THIS->x, THIS->y + 16);
   RefreshHp(data);
@@ -179,6 +182,7 @@ void Update_SPRITE_PLAYER() {
 
 	SetSpriteAnim(THIS, data->direction_anim, 10);
 
+  any_snakes = 0;
 	SPRITEMANAGER_ITERATE(i, spr) {
 		if(spr->type == SPRITE_DOORS) {
 			if(CheckCollision(THIS, spr) && game_state.door_state == 1) {
@@ -189,6 +193,8 @@ void Update_SPRITE_PLAYER() {
 				}
 			}
 		} else if(spr->type == SPRITE_SNAKE) {
+      any_snakes = 1;
+
 			if(CheckCollision(THIS, spr)) {
         data->hp--;
         if(data->hp > 0)
@@ -203,6 +209,11 @@ void Update_SPRITE_PLAYER() {
 			}
 		}
 	}
+  if(any_snakes == 0)
+  {
+      any_snakes = 2;
+      game_state.door_state = 1;
+  }
 }
 
 void Destroy_SPRITE_PLAYER() {

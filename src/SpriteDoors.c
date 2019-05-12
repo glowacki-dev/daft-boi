@@ -35,16 +35,12 @@ void Start_SPRITE_DOORS() {
         SPRITE_SET_HMIRROR(THIS);
         SPRITE_SET_VMIRROR(THIS);
     }
-    
+
     THIS->current_frame = data->sprite_offset;
 }
 
 void Update_SPRITE_DOORS() {
     struct DoorInfo* data = (struct DoorInfo*)THIS->custom_data;
-
-    if(KEY_PRESSED(J_A)) {
-        game_state.door_state = 1;
-	}
 
     if(game_state.door_state == 1) {
         if(data->respawn == 0) {
