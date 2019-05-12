@@ -14,19 +14,99 @@ const UINT8 anim_walk_right[] = {2, 4, 5};
 const UINT8 anim_idle_up[] = {1, 6};
 const UINT8 anim_walk_up[] = {2, 7, 8};
 
+const UINT8 EMPTY_HEART_TILE = 80;
+const UINT8 FULL_HEART_TILE = 81;
+const UINT8 max_hp = 5;
+const UINT8 player_bounce = 16;
+
 struct PlayerInfo {
+  UINT8 hp;
 	INT8 direction;
 	const UINT8 *direction_anim;
 };
 
 extern GameState game_state;
 
+void RefreshHp(struct PlayerInfo* player_info)
+{
+    UINT8 i;
+
+    for(i = 0; i != player_info->hp; i++)
+    {
+        set_win_tiles(0 + i, 1, 1, 1, &FULL_HEART_TILE);
+    }
+    for(; i != max_hp; i++)
+    {
+        set_win_tiles(0 + i, 1, 1, 1, &EMPTY_HEART_TILE);
+    }
+}
+
+void BouncePlayer(struct Sprite* enemy) {
+    // if player is too close to the left wall
+    if(THIS->x < 16 + 16 + 1)
+    {
+        // move player to the right regardless collision coming from right
+        TranslateSprite(THIS, (player_bounce + enemy->coll_w), 0);
+    }
+    // if player is too close to the right wall
+    else if(THIS->x > 160 - 16 - 16 - 1)
+    {
+        // move player to the left regardless collision coming from left
+        TranslateSprite(THIS, (-player_bounce + enemy->coll_w), 0);
+    }
+    else
+    {
+        // if player is on the left side of enemy
+        if(enemy->x >= THIS->x)
+        {
+            // move player to the left
+            TranslateSprite(THIS, -player_bounce, 0);
+        }
+        //if player is on the right side of enemy
+        else
+        {
+            // move player to the right
+            TranslateSprite(THIS, player_bounce, 0);
+        }
+    }
+
+    // if player is too close to the bottom wall
+    if(THIS->y < 16 + 16 + 1)
+    {
+        // move player to the top regardless collision coming from top
+        TranslateSprite(THIS, 0, (player_bounce + enemy->coll_w));
+    }
+    // if player is too close to the top wall
+    else if(THIS->y > 144 - 16 - 16 - 1)
+    {
+        // move player to the bottom regardless collision coming from bottom
+        TranslateSprite(THIS, 0, (-player_bounce + enemy->coll_w));
+    }
+    else
+    {
+        // if player is on the bottom of enemy
+        if(enemy->y >= THIS->y)
+        {
+            // move player to the bottom
+            TranslateSprite(THIS, 0, -player_bounce);
+        }
+        // if player is on the top of enemy
+        else
+        {
+            // move player to the top
+            TranslateSprite(THIS, 0, player_bounce);
+        }
+    }
+}
+
 void Start_SPRITE_PLAYER() {
 	struct PlayerInfo* data = (struct PlayerInfo*)THIS->custom_data;
 	data->direction_anim = anim_idle;
+  data->hp = max_hp;
 	THIS->coll_x = 2;
 	THIS->coll_w = 12;
 	game_state.player = THIS;
+  RefreshHp(data);
 }
 
 void Update_SPRITE_PLAYER() {
@@ -89,7 +169,16 @@ void Update_SPRITE_PLAYER() {
 			}
 		} else if(spr->type == SPRITE_SNAKE) {
 			if(CheckCollision(THIS, spr)) {
-				game_state.state = GAME_OVER;
+        data->hp--;
+        if(data->hp > 0)
+        {
+            RefreshHp(data);
+            BouncePlayer(spr);
+        }
+        else
+        {
+            game_state.state = GAME_OVER;
+        }
 			}
 		}
 	}

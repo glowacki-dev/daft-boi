@@ -4,6 +4,7 @@ UINT8 bank_STATE_GAME = 2;
 
 #include "../res/src/tiles.h"
 #include "../res/src/map.h"
+#include "../res/src/hud_window_map.h"
 #include "../res/src/font.h"
 
 #include "ZGBMain.h"
@@ -37,9 +38,14 @@ void Start_STATE_GAME() {
 	}
 	SHOW_SPRITES;
 
+  WX_REG = 7;
+  WY_REG = 144 - 16;
+  SHOW_WIN;
+  InitWindow(0, 0, 20, 3, hud_window, 3, 0);
+
 	scroll_target = SpriteManagerAdd(SPRITE_PLAYER, 50, 50);
 
-	InitScrollTiles(0, 80, tiles, 2);
+	InitScrollTiles(0, 84, tiles, 2);
 	InitScroll(level->w, level->h, level->map, collision_tiles, 0, level->bank);
 	SHOW_BKG;
 
