@@ -6,6 +6,7 @@ UINT8 bank_SPRITE_PLAYER = 2;
 #include "Keys.h"
 #include "SpriteManager.h"
 #include "GameStates.h"
+#include "Sound.h"
 
 const UINT8 anim_idle[] = {1, 0};
 const UINT8 anim_walk[] = {2, 1, 2};
@@ -197,6 +198,7 @@ void Update_SPRITE_PLAYER() {
 
 			if(CheckCollision(THIS, spr)) {
         data->hp--;
+        PlayFx(CHANNEL_1, 50, 0x5b, 0x82, 0xa4, 0x87, 0x84);
         if(data->hp > 0)
         {
             RefreshHp(data);

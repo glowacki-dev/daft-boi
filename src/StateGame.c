@@ -51,6 +51,9 @@ void Start_STATE_GAME() {
 
 	game_state.state = PLAYING;
 	game_state.door_state = 0;
+	NR52_REG = 0x80; //Enables sound, you should always setup this first
+	NR51_REG = 0xFF; //Enables all channels (left and right)
+	NR50_REG = 0x77; //Max volume
 	PlayMusic(battle_theme_mod_Data, 3, 1);
 }
 

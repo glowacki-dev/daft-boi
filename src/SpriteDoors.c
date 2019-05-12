@@ -31,7 +31,7 @@ void Start_SPRITE_DOORS() {
         data->sprite_offset = 3;
     } else if (THIS->x == 8 * level->w - 16) {
         data->sprite_offset = 3;
-    } else if (THIS->y == 8 * level->h - 16) {
+    } else if (THIS->y == 8 * level->h - 16 || THIS->y == 8 * level->h - 32) {
         SPRITE_SET_HMIRROR(THIS);
         SPRITE_SET_VMIRROR(THIS);
     }
